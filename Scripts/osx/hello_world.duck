@@ -1,0 +1,6 @@
+REM Author: Jippen
+REM Description: Hello world
+DELAY 300
+DEFAULT_DELAY 10
+GUI SPACE
+STRING Hello World

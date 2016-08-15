@@ -1,0 +1,29 @@
+REM Author: Jippen
+REM Description: Set wallpaper to mlp.jpg stored on drive named JUNPDRIVE
+DELAY 300
+DEFAULT_DELAY 1
+
+REM Hide other windows
+REM GUI ALT H
+
+
+REM Open a terminal
+GUI SPACE
+DELAY 1000
+STRING terminal
+ENTER
+DELAY 1000
+
+REM Ensure we have a clear command line
+GUI C
+
+REM Write background image file
+STRING  cd
+ENTER
+DELAY 100
+STRING  sqlite3 ~/Library/Application\ Support/Dock/desktoppicture.db "update data set value = '/Volumes/JUNPDRIVE/mlp.jpg'" && killall Dock  
+ENTER
+
+DELAY 10000
+REM Exit the terminal
+REM GUI Q
