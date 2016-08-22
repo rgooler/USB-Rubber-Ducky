@@ -1,5 +1,5 @@
 REM Author: Jippen
-REM Description: Set wallpaper to mlp.jpg stored on drive named JUNPDRIVE
+REM Description: Set wallpaper to x.png stored on drive named JUNPDRIVE
 DELAY 500
 
 REM Hide other windows
@@ -16,14 +16,43 @@ DELAY 1000
 REM Ensure we have a clear command line
 GUI C
 
+REM Shrink Terminal
+GUI -
+GUI -
+GUI -
+GUI -
+GUI -
+GUI -
+GUI -
+GUI -
+GUI -
+GUI -
+
+
 REM Write background image file
-STRING  sqlite3 ~/Library/Application\ Support/Dock/desktoppicture.db "update data set value = '/Volumes/JUNPDRIVE/mlp.jpg'" && killall Dock  
+REM This is really annoying, cause there's actually three or so ways to change the wallpaper,
+REM And different OSX versions support different ways.
+REM So, F it, do them all
+STRING export X="/Volumes/JUNPDRIVES/x.png"
+STRING  osascript -e 'tell application "Finder" to set desktop picture to POSIX file "$X"';osascript -e 'tell application "System Events" to set picture of every desktop to ("$X" as POSIX file as alias)';sqlite3 ~/Library/Application\ Support/Dock/desktoppicture.db "update data set value = '$X'";killall Dock
 ENTER
 
 
 REM Unmount flash drive
-STRING  diskutil unmountDisk force /Volumes/JUNPDRIVE/
+STRING reset;diskutil unmountDisk force /Volumes/JUNPDRIVE/;reset
 ENTER
+
+REM Grow terminal
+GUI +
+GUI +
+GUI +
+GUI +
+GUI +
+GUI +
+GUI +
+GUI +
+GUI +
+GUI +
 
 DELAY 3000
 
