@@ -33,14 +33,26 @@ REM Write background image file
 REM This is really annoying, cause there's actually three or so ways to change the wallpaper,
 REM And different OSX versions support different ways.
 REM So, F it, do them all
-STRING export X="/Volumes/JUNPDRIVES/x.png"
-STRING  osascript -e 'tell application "Finder" to set desktop picture to POSIX file "$X"';osascript -e 'tell application "System Events" to set picture of every desktop to ("$X" as POSIX file as alias)';sqlite3 ~/Library/Application\ Support/Dock/desktoppicture.db "update data set value = '$X'";killall Dock
+STRING export X="/Volumes/JUNPDRIVE/x.png"
+ENTER
+STRING  osascript -e 'tell application "Finder" to set desktop picture to POSIX file "$X"';
+STRING osascript -e "tell application \"System Events\" to set picture of every desktop to (\"$X\" as POSIX file as alias)";
+STRING sqlite3 ~/Library/Application\ Support/Dock/desktoppicture.db "update data set value = '$X'";
+STRING killall Dock
 ENTER
 
 
 REM Unmount flash drive
-STRING reset;diskutil unmountDisk force /Volumes/JUNPDRIVE/;reset
+STRING  clear
 ENTER
+STRING  diskutil unmountDisk /Volumes/JUNPDRIVE/
+ENTER
+STRING  sleep 1
+ENTER
+STRING  diskutil unmountDisk force /Volumes/JUNPDRIVE/
+ENTER
+STRING  clear
+ENTER 
 
 REM Grow terminal
 GUI +
